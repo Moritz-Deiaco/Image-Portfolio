@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Inter&display=swap");
+
+$text: #e3e7f0;
+$background: #020714;
+$primary: #230b30;
+$secondary: #62396c;
+$accent: #01df39;
+
+$font: "Cutive Mono", monospace;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: $text;
+  font-family: $font;
+  user-zoom: none;
+}
+
+body {
+  background-color: $background;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0px;
+  width: 100%;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: darken($color: $text, $amount: 10) $background;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $background;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: darken($color: $text, $amount: 10);
+  border-radius: 10px;
+  border: 3px solid $background;
+}
+
+img {
+  height: 35vmin;
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease-in-out, top 0.5s ease,
+    left 0.5s ease;
+  transform: translate(-50%, -50%);
+  box-shadow: 0.2rem 0.2rem 1rem transparentize($text, 0.8555555);
+}
+
+img.vertical {
+  width: 35vmin;
+  height: auto;
+}
+
+img[data-status="inactive"] {
+  opacity: 0;
+}
+
+img[data-status="active"] {
+  opacity: 1;
+  cursor: pointer;
+  position: absolute;
+}
+
+img[data-focus="true"] {
+  transform: scale(2) translateX(-25%) translateY(-25%);
+  top: 50% !important;
+  left: 50% !important;
+  z-index: 9999999;
+  &.vertical {
+    transform: scale(1.2) translateX(-50%) translateY(-50%);
+    &.small {
+      transform: scale(1.5) translateX(-25%) translateY(-25%);
+    }
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 100;
+  background-color: $background;
+  display: flex;
+  justify-content: space-between;
+  z-index: 99999999;
+  & span.imprint {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+div.imprint {
+  background-color: $background;
+  opacity: 0;
+  padding: 3rem;
+  &.show {
+    position: fixed;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    z-index: 999999999;
+  }
+  & .close-i {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  & .content {
+    margin-top: 1rem;
+    overflow-y: auto;
+    height: 80vh;
+    padding: 1rem;
+    padding-right: 3rem;
+    text-align: justify;
+  }
+}
+
+div.info {
+  &.hide::after {
+    opacity: 0 !important;
+    animation: none;
+  }
+  &::after {
+    content: "Hovern, um Fotos zu sehen - Klicken zum vergrößern";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: opacity 0.5s ease;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite alternate;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  footer {
+    display: block;
+    text-align: center;
+    & span {
+      display: block;
+    }
+  }
+  div.info {
+    &::after {
+      content: "Wischen, um Fotos zu sehen - Tippen zum vergrößern";
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    text-shadow: 0 0 9px rgba(255, 255, 255, 0.6);
+  }
+  100% {
+    opacity: 0.5;
+    text-shadow: 0 0 9px rgba(255, 255, 255, 0);
+  }
+}
